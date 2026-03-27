@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Achyutha Sushanth Ariga — Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #090c10;
+    --surface: #0e1318;
+    --card: #131920;
+    --border: #1e2830;
+    --accent: #00d4aa;
+    --accent2: #4f9cf9;
+    --accent3: #f7c94b;
+    --text: #e2e8f0;
+    --muted: #7a8fa6;
+    --faint: #2a3540;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+    background: rgba(9,12,16,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+  }
+  .hero-content { max-width: 860px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    color: var(--text);
+  }
+  h1 .highlight { color: var(--accent); }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 44px;
+  }
+  .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    padding: 13px 28px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #00f0c3; transform: translateY(-1px); }
+  .btn-secondary {
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 13px 28px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-glow {
+    position: absolute;
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .stat-item { padding: 28px 32px; border-right: 1px solid var(--border); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  section { padding: 100px 48px; position: relative; z-index: 1; }
+  #experience { background: var(--surface); }
+  #projects { background: var(--bg); }
+  #skills { background: var(--surface); }
+  #education { background: var(--bg); }
+  #contact { background: var(--surface); text-align: center; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 56px;
+    color: var(--text);
+  }
+
+  .exp-timeline { display: flex; flex-direction: column; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    position: relative;
+  }
+  .exp-item::after {
+    content: '';
+    position: absolute;
+    left: 239px; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .exp-date { padding: 28px 40px 28px 0; text-align: right; }
+  .exp-company {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .exp-period { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .exp-dot {
+    position: absolute;
+    left: 232px; top: 32px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--surface);
+    z-index: 1;
+  }
+  .exp-content {
+    padding: 28px 0 28px 48px;
+    border-top: 1px solid var(--border);
+  }
+  .exp-item:first-child .exp-content { border-top: none; }
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .exp-bullets li {
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: var(--faint);
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .tag.accent { background: rgba(0,212,170,0.1); color: var(--accent); }
+  .tag.blue { background: rgba(79,156,249,0.1); color: var(--accent2); }
+  .tag.yellow { background: rgba(247,201,75,0.1); color: var(--accent3); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card.blue::before { background: var(--accent2); }
+  .project-card.blue:hover { border-color: var(--accent2); }
+  .project-card.yellow::before { background: var(--accent3); }
+  .project-card.yellow:hover { border-color: var(--accent3); }
+  .project-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--faint); letter-spacing: 0.1em; margin-bottom: 16px; }
+  .project-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .project-metric {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .project-card.blue .project-metric { color: var(--accent2); }
+  .project-card.yellow .project-metric { color: var(--accent3); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+  .skill-group { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 28px; }
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 11px;
+    border-radius: 3px;
+    background: var(--faint);
+    color: var(--text);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,170,0.05); }
+
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 32px; }
+  .edu-degree { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+  .edu-school { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); margin-bottom: 8px; }
+  .edu-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .edu-gpa { display: inline-block; margin-top: 16px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent3); background: rgba(247,201,75,0.08); padding: 5px 12px; border-radius: 3px; }
+
+  #contact h2 { margin-bottom: 20px; }
+  .contact-sub { font-size: 16px; color: var(--muted); max-width: 420px; margin: 0 auto 44px; }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 60px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 24px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,212,170,0.04); }
+  .contact-link svg { width: 16px; height: 16px; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  footer p { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--faint); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    #hero { padding: 100px 24px 60px; }
+    .stats-strip { grid-template-columns: 1fr 1fr; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-item::after { display: none; }
+    .exp-dot { display: none; }
+    .exp-date { padding: 20px 0 0; text-align: left; }
+    .exp-content { padding: 12px 0 20px; }
+    .edu-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<nav>
+  <a class="nav-logo" href="#hero">Achyutha Sushanth Ariga</a>
+  <ul class="nav-links">
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">software engineer &amp; ms student @ uiuc</div>
+    <h1>Achyutha<br/><span class="highlight">Sushanth</span><br/>Ariga</h1>
+    <p class="hero-desc">
+      Full-stack engineer with 2+ years at Oracle building cloud-native microservices.
+      Now at UIUC researching ML systems — from distributed notifications to RAG pipelines
+      over 1.88M+ crime records.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="mailto:achyuthariga@gmail.com">Get in touch →</a>
+      <a class="btn-secondary" href="#projects">View projects</a>
+    </div>
+  </div>
+  <div class="hero-glow"></div>
+  <div class="stats-strip fade-up">
+    <div class="stat-item">
+      <div class="stat-num">2+</div>
+      <div class="stat-label">yrs @ Oracle</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">60%</div>
+      <div class="stat-label">batch runtime cut</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1.88M+</div>
+      <div class="stat-label">crime records processed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3.8</div>
+      <div class="stat-label">GPA @ UIUC</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label fade-up">/ experience</div>
+  <h2 class="fade-up">Where I've<br/>built things</h2>
+  <div class="exp-timeline">
+    <div class="exp-item fade-up">
+      <div class="exp-date">
+        <div class="exp-company">CITL · UIUC</div>
+        <div class="exp-period">Jun 2025 – Present</div>
+      </div>
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-role">Graduate Research Assistant, Data &amp; Analytics</div>
+        <ul class="exp-bullets">
+          <li>Analyzed large-scale program engagement datasets using Python (Pandas, NumPy) and SQL; built Tableau and PowerBI dashboards tracking KPIs for academic teams.</li>
+          <li>Enhanced front-end architecture of the CITL website — refactored navigation logic, breadcrumb routing, and improved accessibility and page performance.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag accent">Python</span>
+          <span class="tag accent">SQL</span>
+          <span class="tag blue">Tableau</span>
+          <span class="tag blue">PowerBI</span>
+          <span class="tag">HTML/CSS/JS</span>
+        </div>
+      </div>
+    </div>
+    <div class="exp-item fade-up">
+      <div class="exp-date">
+        <div class="exp-company">Oracle Corporation</div>
+        <div class="exp-period">Jul 2022 – Aug 2024</div>
+      </div>
+      <div class="exp-dot"></div>
+      <div class="exp-content">
+        <div class="exp-role">Software Development Engineer, Applications</div>
+        <ul class="exp-bullets">
+          <li>Designed 12+ cloud-native microservices in Java &amp; Spring Boot with multi-threaded processing; reduced batch job runtime by 60% on Oracle MetadataService.</li>
+          <li>Revamped high-throughput REST APIs with unit/integration testing (JUnit, Postman) — improved reliability and cut response times by 20%.</li>
+          <li>Optimized SQL schemas and queries across 10+ production services; delivered 15+ data-driven UI components using Oracle JET.</li>
+          <li>Automated CI/CD pipelines via Jenkins and Sonar — reduced deployment errors by 30% in Agile Scrum sprints with 10+ engineers.</li>
+        </ul>
+        <div class="tag-row">
+          <span class="tag accent">Java</span>
+          <span class="tag accent">Spring Boot</span>
+          <span class="tag blue">Microservices</span>
+          <span class="tag blue">REST APIs</span>
+          <span class="tag">Jenkins</span>
+          <span class="tag">Oracle JET</span>
+          <span class="tag yellow">OCI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label fade-up">/ projects</div>
+  <h2 class="fade-up">Things I've<br/>shipped</h2>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-num">01 / ML + RAG</div>
+      <div class="project-title">Narrative Intelligence for Urban Crime</div>
+      <div class="project-desc">End-to-end ML + RAG system over 1.88M+ Chicago crime records &amp; Tribune articles. Integrates arrest prediction with retrieval-augmented narrative generation for data-grounded insights.</div>
+      <div class="project-metric">AUC 0.85 · 78% grounded responses · 80% hallucination reduction · 2.6s latency</div>
+      <div class="tag-row">
+        <span class="tag accent">SentenceTransformers</span>
+        <span class="tag accent">FAISS</span>
+        <span class="tag">XGBoost</span>
+        <span class="tag">AWS S3</span>
+        <span class="tag">SageMaker</span>
+        <span class="tag blue">Gemini</span>
+      </div>
+    </div>
+    <div class="project-card blue fade-up">
+      <div class="project-num">02 / Distributed Systems</div>
+      <div class="project-title">Distributed Notification Delivery System</div>
+      <div class="project-desc">Event-driven microservices backend delivering real-time email, SMS, and push notifications. Handles 10,000+ events/second with strong delivery guarantees and full observability.</div>
+      <div class="project-metric">10K+ events/sec · auto-scaling K8s · Prometheus/Grafana observability</div>
+      <div class="tag-row">
+        <span class="tag blue">Apache Kafka</span>
+        <span class="tag blue">Kubernetes</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Spring Boot</span>
+        <span class="tag accent">Prometheus</span>
+      </div>
+    </div>
+    <div class="project-card yellow fade-up">
+      <div class="project-num">03 / Full-Stack</div>
+      <div class="project-title">Illini Lost &amp; Found Platform</div>
+      <div class="project-desc">Full-stack MERN platform for UIUC students — centralized lost &amp; found with JWT auth, role-based access, and sub-1s search. Restricted to @illinois.edu via SendGrid.</div>
+      <div class="project-metric">25% faster data retrieval · sub-1s search · secure JWT auth</div>
+      <div class="tag-row">
+        <span class="tag yellow">React + TypeScript</span>
+        <span class="tag yellow">Node.js</span>
+        <span class="tag">MongoDB Atlas</span>
+        <span class="tag">Firebase</span>
+        <span class="tag">SendGrid</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-label fade-up">/ skills</div>
+  <h2 class="fade-up">My toolkit</h2>
+  <div class="skills-grid">
+    <div class="skill-group fade-up">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">TypeScript</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">C / C++</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">Shell</span>
+      </div>
+    </div>
+    <div class="skill-group fade-up">
+      <div class="skill-group-title">Frameworks &amp; Infra</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Spring Boot</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Apache Kafka</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Kubernetes</span>
+        <span class="skill-tag">Jenkins</span>
+        <span class="skill-tag">REST APIs</span>
+      </div>
+    </div>
+    <div class="skill-group fade-up">
+      <div class="skill-group-title">Cloud &amp; Databases</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AWS (ECS, S3, RDS)</span>
+        <span class="skill-tag">GCP BigQuery</span>
+        <span class="skill-tag">Azure AKS</span>
+        <span class="skill-tag">MongoDB Atlas</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Firebase</span>
+        <span class="skill-tag">Neo4J</span>
+      </div>
+    </div>
+    <div class="skill-group fade-up">
+      <div class="skill-group-title">ML / Data</div>
+      <div class="skill-tags">
+        <span class="skill-tag">SentenceTransformers</span>
+        <span class="skill-tag">FAISS</span>
+        <span class="skill-tag">XGBoost</span>
+        <span class="skill-tag">Pandas / NumPy</span>
+        <span class="skill-tag">SageMaker</span>
+        <span class="skill-tag">Vertex AI</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">PowerBI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-label fade-up">/ education</div>
+  <h2 class="fade-up">Academic<br/>background</h2>
+  <div class="edu-grid fade-up">
+    <div class="edu-card">
+      <div class="edu-degree">MS Information Management<br/><span style="color:var(--muted);font-size:15px;font-weight:400">Computer Science track</span></div>
+      <div class="edu-school">University of Illinois Urbana-Champaign</div>
+      <div class="edu-meta">Aug 2024 – May 2026 · Champaign, IL</div>
+      <div class="edu-gpa">GPA 3.8 / 4.0</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">BTech Mechanical Engineering</div>
+      <div class="edu-school">NIT Durgapur</div>
+      <div class="edu-meta">Jul 2018 – Jun 2022 · Durgapur, India</div>
+      <div class="edu-gpa">CGPA 8.36 / 10.0</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label fade-up">/ contact</div>
+  <h2 class="fade-up">Let's work<br/>together</h2>
+  <p class="contact-sub fade-up">Open to full-time SWE roles in the US. Feel free to reach out.</p>
+  <div class="contact-links fade-up">
+    <a class="contact-link" href="mailto:achyuthariga@gmail.com">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      achyuthariga@gmail.com
+    </a>
+    <a class="contact-link" href="https://linkedin.com/in/achyuthariga/" target="_blank">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      linkedin.com/in/achyuthariga
+    </a>
+    <a class="contact-link" href="https://github.com/achyuth706" target="_blank">
+      <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      github.com/achyuth706
+    </a>
+    <a class="contact-link" href="tel:+14479026604">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3A2 2 0 017 1.72c.32 1.53.9 3 1.59 4.36a2 2 0 01-.45 2.11L6.91 9.41a16 16 0 006.59 6.59l1.26-1.26a2 2 0 012.11-.45c1.36.7 2.83 1.27 4.36 1.59a2 2 0 011.77 2.04z"/></svg>
+      (447) 902-6604
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Achyutha Sushanth Ariga</p>
+  <p>Champaign, Illinois · Open to US roles</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
